@@ -1,0 +1,18 @@
+@"
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+.chroma/
+chroma/
+*.sqlite3
+results/
+.pytest_cache/
+frappe_docker/
+*.gguf
+.vscode/
+.idea/
+tests/*
+!tests/test_evals.py
+"@ | Set-Content -Encoding ascii .gitignore
