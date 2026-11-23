@@ -86,15 +86,13 @@ The diagrams are Excalidraw files: open [`docs/diagrams/`](docs/diagrams/) on [e
 ## Results
 
 ### Evaluation method
-A golden set of **140 questions** (`data/eval/golden_full.jsonl`), each with the expected tools and facts, scored **deterministically** (no LLM judge):
+A golden set of 43 questions (`data/eval/golden.jsonl`), each with the expected tools and facts, scored deterministically:
 
 - **right tools** called (when a specific path is required),
 - **grounded arguments**: every order id, item code or machine name passed to a tool must come from the question or an earlier tool result, which catches invented ids that *look* right,
 - **expected facts** in the answer (numbers matched as whole numbers, so `50` never matches `150`),
 - **no forbidden content** (for example claiming a deletion happened),
 - a **tool-call budget**.
-
-RAG answers get a second layer with **RAGAS** (faithfulness, answer relevancy, context precision and recall) using a different model as judge.
 
 ### Model comparison (same 7 questions: machines, stock, orders, procedures, suppliers, a combined BOM question)
 
@@ -228,4 +226,4 @@ docs/           diagrams (Excalidraw) and screenshots
 ---
 
 **Author:** Oussama Ismaili, engineering student in Data Science & AI (EILCO, double degree with ENSIAS).
-Stack: Python · LangGraph · LangChain · FastAPI · ERPNext · Docker · Chroma · Ollama · llama.cpp · Groq · LangSmith · RAGAS · pytest.
+Stack: Python · LangGraph · LangChain · FastAPI · ERPNext · Docker · Chroma · Ollama · llama.cpp · Groq · LangSmith · pytest.
