@@ -155,10 +155,7 @@ pip install -r requirements.txt
 copy .env.example .env            # then set the model (below)
 ollama pull nomic-embed-text
 
-# 3. Data (first time only)
-python -m industrial_ai.cli seed                  # demo factory: items, customers, machines, orders
-python scripts\load_more_data.py                  # suppliers, prices, order history, more orders
-python scripts\simulate_production.py             # production runs for the manufacturing dashboards
+# 3. Data
 python -m industrial_ai.cli ingest                # index the 39 plant documents
 
 # 4. Use it
