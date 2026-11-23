@@ -187,8 +187,7 @@ python -m industrial_ai.cli serve                 # web UI: http://127.0.0.1:800
 
 ```powershell
 python -m pytest -q                                                           # unit tests
-python -m industrial_ai.cli eval --cases data/eval/golden_full.jsonl --only orders stock --sleep 3
-python -m industrial_ai.evals.ragas_eval --cases data/eval/golden_full.jsonl --only F-R01 --judge-model qwen/qwen3.8-27b
+python -m industrial_ai.cli eval --cases data/eval/golden.jsonl --only orders stock --sleep 3
 python -m industrial_ai.cli bench --models qwen2.5:3b --runs 3                # speed: TTFT, tokens/s, VRAM
 ```
 Reports are written to `results/`.
@@ -205,12 +204,12 @@ src/industrial_ai/
 ├── erp/        client.py (ERPNext REST client) · service.py (business logic and maths) · seed.py (demo data)
 ├── rag/        chunking.py · embeddings.py · store.py (Chroma) · retriever.py
 ├── api/        main.py (FastAPI: /api/chat, /api/rag/search, /api/health) · static/index.html
-├── evals/      scorer.py (deterministic) · runner.py · ragas_eval.py
+├── evals/      scorer.py (deterministic) · runner.py
 ├── bench/      speed benchmarks (Ollama and llama.cpp)
 ├── config.py   settings from .env
 └── cli.py      seed · ingest · chat · serve · eval · bench
 data/docs/      39 plant documents (procedures, policies, datasheets, directories)
-data/eval/      golden question sets (43 core, 140 full)
+data/eval/      golden question sets (43 core)
 scripts/        ERPNext setup, extra data, production simulation
 docs/           diagrams (Excalidraw) and screenshots
 ```
@@ -224,16 +223,7 @@ docs/           diagrams (Excalidraw) and screenshots
 - **RAG as a tool, not on every question.** The model searches documents only when the question needs them, so policy text never mixes with stock figures.
 - **Tool descriptions are part of the program.** Several fixes above were one sentence in a docstring.
 - **Provider-agnostic.** Groq, Ollama and llama.cpp sit behind the same LangChain chat-model interface.
-- **Deterministic evaluation first, LLM judge second.** Rules catch invented ids and wrong numbers reproducibly; RAGAS adds depth for the document answers.
 
----
-
-## Limitations and next steps
-
-- Conversation memory is in RAM (lost on restart); production would use a SQLite or Postgres checkpointer and trim long histories.
-- Small local models (≤3B) handle single lookups but struggle with multi-step questions.
-- The golden set was written alongside the system: it catches regressions but is not an independent benchmark.
-- Next: full 140-question results per model, RAGAS scores for the document answers, tools for purchase orders and production history, and write actions behind human confirmation.
 
 ---
 
